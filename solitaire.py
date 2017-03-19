@@ -9,8 +9,8 @@ class Deck(object):
             self._cards.append(card)
 
     def shuffle(self):
+        random.seed()
         for card in range(0, len(self._cards)):
-            random.seed()
             swapcard = random.randrange(0, len(self._cards))
             self.swap_card(card, swapcard)
 
@@ -34,42 +34,49 @@ class Deck(object):
     def move_card_down(self, original_position, distance):
         self._cards.insert((original_position+distance)%len(self._cards), self._cards.pop(original_position))
 
+    def triple_cut(self, first_joker_position, second_joker_position):
+        front = self._cards[0:first_joker_position]
+        middle = self._cards[first_joker_position:second_joker_position+1]
+        back = self._cards[second_joker_position+1:len(self._cards)]
+
+        self._cards = back + middle + front
+
 key_deck = Deck()
 key_deck.shuffle()
 key = key_deck.get()
 
 print "------------------------------"
 print "moving jokers:"
-joker_a_location = key_deck.find_card(53)
-print "'A' joker location: %d" % joker_a_location
+joker_a_position = key_deck.find_card(53)
+print "'A' joker position: %d" % joker_a_position
 
-key_deck.move_card_down(joker_a_location, 1)
-joker_a_location = key_deck.find_card(53)
-print "moved 'A' joker to: %d" % joker_a_location
+key_deck.move_card_down(joker_a_position, 1)
+joker_a_position = key_deck.find_card(53)
+print "moved 'A' joker to: %d" % joker_a_position
 
-joker_b_location = key_deck.find_card(54)
-print "'B' joker location: %d" % joker_b_location
+joker_b_position = key_deck.find_card(54)
+print "'B' joker position: %d" % joker_b_position
 
-key_deck.move_card_down(joker_b_location, 2)
-joker_b_location = key_deck.find_card(54)
-print "moved 'B' joker to: %d" % joker_b_location
+key_deck.move_card_down(joker_b_position, 2)
+joker_b_position = key_deck.find_card(54)
+print "moved 'B' joker to: %d" % joker_b_position
+
+# CRITICAL: Must re-find 'A' joker as its position relative to 'B' joker has now changed
+joker_a_position = key_deck.find_card(53)
 
 print "------------------------------"
 print "performing triple cut:"
-if joker_a_location < joker_b_location:
-    first_joker_location = joker_a_location
-    second_joker_location = joker_b_location
-    print "first joker is 'A' joker: %d" % first_joker_location
-    print "second joker is 'B' joker: %d" % second_joker_location
+if joker_a_position < joker_b_position:
+    first_joker_position = joker_a_position
+    second_joker_position = joker_b_position
+    print "first joker is 'A' joker: %d" % first_joker_position
+    print "second joker is 'B' joker: %d" % second_joker_position
 else:
-    first_joker_location = joker_b_location
-    second_joker_location = joker_a_location
-    print "first joker is 'B' joker: %d" % first_joker_location
-    print "second joker is 'A' joker: %d" % second_joker_location
-temporary_deck = key_deck.get()
-print temporary_deck
-print temporary_deck[0:first_joker_location]
-#TODO: THIS DOESN'T WORK RIGHT FOR SHORT MIDDLE BITS
-print temporary_deck[first_joker_location:second_joker_location+1]
-print temporary_deck[second_joker_location+1:len(temporary_deck)]
+    first_joker_position = joker_b_position
+    second_joker_position = joker_a_position
+    print "first joker is 'B' joker: %d" % first_joker_position
+    print "second joker is 'A' joker: %d" % second_joker_position
+
+key_deck.triple_cut(first_joker_position, second_joker_position)
+print "------------------------------"
 print "------------------------------"
