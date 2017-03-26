@@ -11,6 +11,6 @@ Python implementation of Solitaire Cipher from Cryptonomicon (book by Neal Steph
 
 ## Usage
  * `solitaire --genkey --outfile /tmp/key`
- * `ENCRYPTED_MSG=``solitaire --encrypt --keyfile /tmp/key --message DONOTUSEPC`` `
+ * ``ENCRYPTED_MSG=`solitaire --encrypt --keyfile /tmp/key --message DONOTUSEPC` ``
  * `echo $ENCRYPTED_MSG`
  * `solitaire --decrypt --keyfile /tmp/key --message $ENCRYPTED_MSG`
