@@ -10,6 +10,7 @@ Python implementation of Solitaire Cipher from Cryptonomicon (book by Neal Steph
  * `python setup.py install`
 
 ## Usage
+ * `workon solitaire`
  * `solitaire --genkey --outfile /tmp/key`
  * ``ENCRYPTED_MSG=`solitaire --encrypt --keyfile /tmp/key --message DONOTUSEPC` ``
  * `echo $ENCRYPTED_MSG`
