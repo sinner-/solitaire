@@ -1,4 +1,4 @@
-from deck import Deck
+from solitaire.deck.deck import Deck
 
 class SolitaireDeck(Deck):
     def _triple_cut(self, first_joker_position, second_joker_position):
@@ -50,7 +50,7 @@ class SolitaireDeck(Deck):
     def generate_keystream(self, keystream_length):
         keystream = []
 
-        for _ in xrange(keystream_length):
+        for _ in range(keystream_length):
             output_card = None
             while output_card == None:
                 output_card = self._solitaire()
